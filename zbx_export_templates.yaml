@@ -1,0 +1,139 @@
+zabbix_export:
+  version: '6.4'
+  template_groups:
+    - uuid: 5c10e8ea8f6b4775a20041d7471aec54
+      name: Templates/Printers
+  templates:
+    - uuid: 6b2666d5d5294416948221c1dc5a2c26
+      template: 'HP NeverStop Printers'
+      name: 'HP NeverStop Printers'
+      description: 'HP NeverStop Printers'
+      groups:
+        - name: Templates/Printers
+      items:
+        - uuid: 19dfe2eb2ed7461681c92ba7e13551a0
+          name: Device
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.25.3.2.1.3.1
+          key: HP_NeverStop_Device
+          delay: 24h
+          trends: '0'
+          value_type: TEXT
+        - uuid: cadf14e540564e75827e6fb2ae044ea4
+          name: Name
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.1.5.0
+          key: HP_NeverStop_Name
+          delay: 24h
+          history: 30d
+          trends: '0'
+          value_type: TEXT
+        - uuid: bbd900c93f3d48b78f9a05d4b2bcb5c1
+          name: 'Device Model'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.11.2.4.3.5.44.0
+          key: HP_Never_Stop_Device_Model
+          delay: 24h
+          trends: '0'
+          value_type: TEXT
+        - uuid: 43bd3215395d4463bded547fc04d2287
+          name: 'Device System Name'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.1.5.0
+          key: HP_Never_Stop_Device_System_Name
+          delay: 24h
+          trends: '0'
+          value_type: TEXT
+        - uuid: 053ec320dfbe48f482afcf7e1ac474a2
+          name: 'IP address'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.4.20.1.1.192.168.1.209
+          key: HP_Never_Stop_IP_address
+          delay: 24h
+          history: 30d
+          trends: '0'
+          value_type: TEXT
+        - uuid: d8529c491bff46e19c01d8b640156176
+          name: Model
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.2699.1.2.1.2.1.1.2.1
+          key: HP_Never_Stop_model
+          delay: 24h
+          history: 30d
+          trends: '0'
+          value_type: TEXT
+        - uuid: 644425799a2b46a7879602f68eec1e66
+          name: HP_Never_Stop_Printed_Pages_2
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.6.0
+          key: HP_Never_Stop_Printed_Pages_2
+          delay: 24h
+        - uuid: cdbda070ae4b430993367a71f62eb229
+          name: HP_Never_Stop_Printed_Pages_3
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.10.11.5.0
+          key: HP_Never_Stop_Printed_Pages_3
+          delay: 24h
+        - uuid: b5bbeac183134098ba4f0a1de3a4ca2c
+          name: HP_Never_Stop_Printed_Pages
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.43.10.2.1.4.1.1
+          key: HP_Never_Stop_Printed_Pages_Counter_1
+          delay: 24h
+          history: 360d
+        - uuid: c493b104a6254117afd387a5f5005376
+          name: HP_Never_Stop_Printed_Pages_1
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.5.0
+          key: HP_Never_Stop_Printed_Shits_1
+          delay: 24h
+        - uuid: 43d54c3326df4a359b1a4cb00e0b05c0
+          name: 'HP_Never_Stop_Toner_Quantity, %'
+          type: SNMP_AGENT
+          snmp_oid: .1.0.8802.1.1.1.1.3.1.1.2.1
+          key: HP_Never_Stop_Toner_Quantity
+          delay: 24h
+          history: 60d
+          units: '%'
+          triggers:
+            - uuid: d832ce7215644c8194faf06fc8c96d31
+              expression: 'last(/HP NeverStop Printers/HP_Never_Stop_Toner_Quantity)<10'
+              name: 'Уровень тонера меньше чем 10% на {HOST.NAME}'
+              opdata: 'Status: {ITEM.LASTVALUE}'
+              priority: DISASTER
+            - uuid: fa712618b2bf4a5086eddb0a024fde61
+              expression: 'last(/HP NeverStop Printers/HP_Never_Stop_Toner_Quantity)<15'
+              name: 'Уровень тонера меньше чем 15% на {HOST.NAME}'
+              opdata: 'Status: {ITEM.LASTVALUE}'
+              priority: HIGH
+            - uuid: 7fa867d33dd04feda9c78f59734f51a5
+              expression: 'last(/HP NeverStop Printers/HP_Never_Stop_Toner_Quantity)<20'
+              name: 'Уровень тонера меньше чем 20% на {HOST.NAME}'
+              opdata: 'Status: {ITEM.LASTVALUE}'
+              priority: WARNING
+            - uuid: 4bbfa5cad2eb4832a5c59b36a525c2f9
+              expression: 'last(/HP NeverStop Printers/HP_Never_Stop_Toner_Quantity)<49'
+              name: 'Уровень тонера меньше чем 49% на {HOST.NAME}'
+              event_name: 'Уровень тонера меньше чем 49% на {HOST.NAME}'
+              opdata: 'Status: {ITEM.LASTVALUE}'
+              priority: INFO
+              description: 'Тригер для уведомления о низком количестве тонера на HP NeverStop'
+        - uuid: d60cf8722c88453daa92fc7488b12420
+          name: 'HP_Never_Stop_Toner_Quantity_2, %'
+          type: SNMP_AGENT
+          snmp_oid: .1.0.8802.1.1.1.1.3.1.1.2.2
+          key: HP_Never_Stop_Toner_Quantity_2
+          delay: 24h
+          units: '%'
+        - uuid: 562eb3a560fb4e938b12e5dfa0821c12
+          name: 'Total number of black pages printed by the device'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.6.0
+          key: HP_Never_Stop_Total_Number_printed_black_pages
+          delay: 24h
+        - uuid: d3c99a5ac6624bdab71ac856967b6e9c
+          name: 'Total number printed by the Device'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.2.1.43.10.2.1.4.1.1
+          key: HP_Never_Stop_Total_Number_printed_pages_all_colours
+          delay: 24h
